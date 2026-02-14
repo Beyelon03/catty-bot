@@ -1,0 +1,3 @@
+DISCORD_TOKEN=S3kmvuvLWlTYtvufZU2wnckldf5NBWmL
+DATABASE_URL=postgresql://postgres:1386@localhost:5432/cotus_ds?schema=public
+DISCORD_DEV_GUILD_ID=1432072197756817641

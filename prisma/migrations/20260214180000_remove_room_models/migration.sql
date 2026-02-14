@@ -1,0 +1,3 @@
+DROP TABLE IF EXISTS "PrivateRoom";
+DROP TABLE IF EXISTS "GuildRoomConfig";
+DROP TABLE IF EXISTS "User";
