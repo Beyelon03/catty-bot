@@ -3,7 +3,7 @@ export const INTERFACE_CHANNEL_NAME = 'управление';
 export const CREATE_VOICE_NAME = '➕ Создать';
 
 export const MANAGEMENT_EMBED_IMAGE_URL =
-  'https://media.discordapp.net/attachments/1472204000521879747/1472321007292518421/59iTaGz.png';
+  'https://cdn.discordapp.com/attachments/1432072199468089455/1472376344439685264/92WXKSe.png';
 export const MANAGEMENT_EMBED_COLOR = 0x8b5cf6;
 
 export const ROOM_BUTTONS = {
