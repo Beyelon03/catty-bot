@@ -9,6 +9,7 @@
 - **Build:** `prisma generate && nest build` — генерируется Prisma Client и собирается проект.
 - **Start (prod):** `prisma migrate deploy && node dist/main` — применяются миграции к `DATABASE_URL`, затем запускается приложение.
 - **PORT:** приложение слушает `process.env.PORT ?? 3000` (Railway подставляет `PORT` сам).
+- **prisma** в **dependencies** — чтобы на Railway при `npm install` (в т.ч. production) был доступен CLI и выполнялся `prisma migrate deploy`.
 
 ## Настройка в Railway
 
@@ -32,3 +33,15 @@
 6. **Root Directory:** не меняй, если репозиторий — один проект в корне.
 
 После деплоя при первом старте выполнится `prisma migrate deploy`, создадутся все таблицы, затем запустится бот.
+
+---
+
+## Если таблицы всё ещё не создаются
+
+1. **Start Command** в Railway должен быть ровно: `npm run start:prod` (не `npm start` и не `node dist/main`).
+2. В логах при старте должна быть строка от Prisma вроде «X migrations applied» или «Already up to date». Если её нет — миграции не запускались.
+3. Один раз можно применить миграции вручную: в Railway открой сервис → Shell (или через Railway CLI) и выполни:
+   ```bash
+   npx prisma migrate deploy
+   ```
+   Убедись, что в этом окружении задана переменная `DATABASE_URL` от твоего PostgreSQL.
