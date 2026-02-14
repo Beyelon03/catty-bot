@@ -11,6 +11,10 @@
 - **PORT:** приложение слушает `process.env.PORT ?? 3000` (Railway подставляет `PORT` сам).
 - **prisma** в **dependencies** — чтобы на Railway при `npm install` (в т.ч. production) был доступен CLI и выполнялся `prisma migrate deploy`.
 
+## Команда запуска (важно)
+
+В корне репозитория лежит **`railway.toml`** с `startCommand = "npm run start:prod"`. Railway подхватывает его при деплое, поэтому вручную в дашборде ничего менять не нужно. Если раньше был указан `npm start`, после пуша с `railway.toml` будет использоваться `npm run start:prod` (миграции применятся, затем запуск приложения).
+
 ## Настройка в Railway
 
 1. **Сервис:** New Project → Deploy from GitHub (репозиторий cat_bot).
@@ -26,9 +30,7 @@
    `npm run build`  
    (по умолчанию Railway может использовать его; если указан свой — оставь ровно это).
 
-5. **Start Command (важно):**  
-   `npm run start:prod`  
-   Не используй `npm start` — иначе миграции не применятся и таблицы в базе не появятся.
+5. **Start Command:** задаётся в `railway.toml`: `npm run start:prod`. В дашборде можно не указывать — конфиг из репозитория имеет приоритет.
 
 6. **Root Directory:** не меняй, если репозиторий — один проект в корне.
 
