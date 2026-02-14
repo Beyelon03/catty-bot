@@ -11,9 +11,9 @@
 - **PORT:** приложение слушает `process.env.PORT ?? 3000` (Railway подставляет `PORT` сам).
 - **prisma** в **dependencies** — чтобы на Railway при `npm install` (в т.ч. production) был доступен CLI и выполнялся `prisma migrate deploy`.
 
-## Команда запуска (важно)
+## Команда запуска
 
-В корне репозитория лежит **`railway.toml`** с `startCommand = "npm run start:prod"`. Railway подхватывает его при деплое, поэтому вручную в дашборде ничего менять не нужно. Если раньше был указан `npm start`, после пуша с `railway.toml` будет использоваться `npm run start:prod` (миграции применятся, затем запуск приложения).
+В **`railway.toml`** задано: `npm run build && prisma migrate deploy && node dist/main.js`. Сборка выполняется при старте контейнера, поэтому `dist/` создаётся в том же окружении, где запускается приложение (на Railway артефакты фазы build не всегда попадают в run, поэтому сборка перенесена в start).
 
 ## Настройка в Railway
 
@@ -30,7 +30,7 @@
    `npm run build`  
    (по умолчанию Railway может использовать его; если указан свой — оставь ровно это).
 
-5. **Start Command:** задаётся в `railway.toml`: `npm run start:prod`. В дашборде можно не указывать — конфиг из репозитория имеет приоритет.
+5. **Start Command:** задаётся в `railway.toml` (сборка при старте + миграции + запуск). В дашборде можно не указывать — конфиг из репозитория имеет приоритет.
 
 6. **Root Directory:** не меняй, если репозиторий — один проект в корне.
 
@@ -40,7 +40,7 @@
 
 ## Если таблицы всё ещё не создаются
 
-1. **Start Command** в Railway должен быть ровно: `npm run start:prod` (не `npm start` и не `node dist/main`).
+1. **Start Command** в Railway берётся из `railway.toml` (сборка + миграции + node). Не переопределяй его на `npm start` или только `node dist/main`.
 2. В логах при старте должна быть строка от Prisma вроде «X migrations applied» или «Already up to date». Если её нет — миграции не запускались.
 3. Один раз можно применить миграции вручную: в Railway открой сервис → Shell (или через Railway CLI) и выполни:
    ```bash
